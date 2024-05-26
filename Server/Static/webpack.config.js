@@ -6,7 +6,7 @@ module.exports = {
     entry: Path.resolve(__dirname, "index.tsx"),
     output: {
         filename: "index.js",
-        path: Path.resolve(__dirname, "..", "..", "build", "HTML"),
+        path: Path.resolve(__dirname, "..", "..", "Build", "HTML"),
     },
     devtool: "source-map",
     resolve: {

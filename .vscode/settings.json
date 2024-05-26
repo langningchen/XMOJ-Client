@@ -103,7 +103,7 @@
         "commands": [
             {
                 "match": "\\.(html|css|ts|js)",
-                "cmd": "cmake --build build --target ServerStatic",
+                "cmd": "cmake --build Build --target ServerStatic",
             }
         ]
     }
