@@ -1,5 +1,7 @@
 #include "APIProceed.hpp"
 #include "API/Login.hpp"
+#include "API/GetSettings.hpp"
+#include "API/SetSettings.hpp"
 
 API_PROCEED::API_PROCEED(DATABASE *Database, std::string APIName, nlohmann::json &APIParams)
 {
@@ -7,6 +9,8 @@ API_PROCEED::API_PROCEED(DATABASE *Database, std::string APIName, nlohmann::json
     this->APIName = APIName;
     this->APIParams = APIParams;
     DEFINE_API(Login, LOGIN);
+    DEFINE_API(GetSettings, GET_SETTINGS);
+    DEFINE_API(SetSettings, SET_SETTINGS);
 }
 nlohmann::json API_PROCEED::Call()
 {
