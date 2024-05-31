@@ -9,7 +9,7 @@ SERVER::SERVER(DATABASE *Database)
     Status = STOPPED;
     this->Database = Database;
 
-    ASSERT_SAME(Server.set_mount_point("/", "HTML"), true);
+    ASSERT_SAME(Server.set_mount_point("/", "Static"), true);
 
     Server.set_logger(
               [](const httplib::Request &Request, const httplib::Response &Response)

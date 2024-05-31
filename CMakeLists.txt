@@ -45,8 +45,8 @@ set(LIBS
 aux_source_directory(Classes SourceFiles)
 aux_source_directory(Utilities SourceFiles)
 aux_source_directory(Utilities/Database SourceFiles)
-aux_source_directory(Server SourceFiles)
-aux_source_directory(Server/API SourceFiles)
+aux_source_directory(Backend SourceFiles)
+aux_source_directory(Backend/API SourceFiles)
 add_executable(XMOJ-Client
     main.cpp
     ${SourceFiles}
@@ -56,6 +56,6 @@ target_link_libraries(XMOJ-Client PRIVATE ${LIBS})
 
 add_custom_target(
     ServerStatic ALL
-    COMMAND npx webpack --config Static/webpack.config.js
+    COMMAND npx webpack --config Frontend/webpack.config.js
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )

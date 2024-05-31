@@ -7,7 +7,7 @@ module.exports = {
     entry: Path.resolve(__dirname, "index.tsx"),
     output: {
         filename: "index.js",
-        path: Path.resolve(__dirname, "..", "Build", "HTML"),
+        path: Path.resolve(__dirname, "..", "Build", "Static"),
     },
     devtool: "source-map",
     resolve: {
@@ -35,8 +35,8 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: Path.resolve(__dirname, "HTML"),
-                    to: Path.resolve(__dirname, "..", "Build", "HTML")
+                    from: Path.resolve(__dirname, "Static"),
+                    to: Path.resolve(__dirname, "..", "Build", "Static")
                 },
             ],
         }),
