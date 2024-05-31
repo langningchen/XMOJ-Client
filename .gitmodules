@@ -1,18 +1,18 @@
-[submodule "Libraries/SQLiteCpp"]
-	path = Libraries/SQLiteCpp
+[submodule "Backend/Libraries/SQLiteCpp"]
+	path = Backend/Libraries/SQLiteCpp
 	url = https://github.com/srombauts/SQLiteCpp.git
-[submodule "Libraries/json"]
-	path = Libraries/json
+[submodule "Backend/Libraries/json"]
+	path = Backend/Libraries/json
 	url = https://github.com/nlohmann/json.git
-[submodule "Libraries/cpp-httplib"]
-	path = Libraries/cpp-httplib
+[submodule "Backend/Libraries/cpp-httplib"]
+	path = Backend/Libraries/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib.git
-[submodule "Libraries/curl"]
-	path = Libraries/curl
+[submodule "Backend/Libraries/curl"]
+	path = Backend/Libraries/curl
 	url = https://github.com/curl/curl.git
-[submodule "Libraries/mbedtls"]
-	path = Libraries/mbedtls
+[submodule "Backend/Libraries/mbedtls"]
+	path = Backend/Libraries/mbedtls
 	url = https://github.com/Mbed-TLS/mbedtls.git
-[submodule "Libraries/wolfssl"]
-	path = Libraries/wolfssl
+[submodule "Backend/Libraries/wolfssl"]
+	path = Backend/Libraries/wolfssl
 	url = https://github.com/wolfssl/wolfssl.git

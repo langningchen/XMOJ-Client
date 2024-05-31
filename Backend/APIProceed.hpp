@@ -4,7 +4,7 @@
 #include <functional>
 #include <windows.h>
 #include <nlohmann/json.hpp>
-#include <Utilities/Database.hpp>
+#include <Database.hpp>
 
 #define DEFINE_API(Name, ClassName) APIFunctions[#Name] = [&]() { \
     ClassName Name(Database);                                     \

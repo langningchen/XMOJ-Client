@@ -107,5 +107,6 @@
                 "cmd": "cmake --build Build --target ServerStatic",
             }
         ]
-    }
+    },
+    "cmake.sourceDirectory": "C:/Users/Son/XMOJ-Client/Backend"
 }

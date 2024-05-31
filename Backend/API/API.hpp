@@ -1,8 +1,8 @@
 #pragma once
 #include <nlohmann/json.hpp>
-#include <Utilities/Database.hpp>
+#include <Database.hpp>
 #include <Utilities/WebRequest.hpp>
-#include <Utilities/XMOJ.hpp>
+#include <Classes/XMOJ.hpp>
 #include <Utilities/StringOperation.hpp>
 #include <Utilities/Logger.hpp>
 

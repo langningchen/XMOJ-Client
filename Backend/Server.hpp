@@ -1,7 +1,7 @@
 #pragma once
 #include <cpp-httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <Utilities/Database.hpp>
+#include <Database.hpp>
 
 class SERVER
 {
