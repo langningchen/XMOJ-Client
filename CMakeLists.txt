@@ -56,6 +56,6 @@ target_link_libraries(XMOJ-Client PRIVATE ${LIBS})
 
 add_custom_target(
     ServerStatic ALL
-    COMMAND npx webpack --config Static/webpack.config.js && ${CMAKE_COMMAND} -E copy Static/HTML ${CMAKE_BINARY_DIR}/HTML
+    COMMAND npx webpack --config Static/webpack.config.js
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )

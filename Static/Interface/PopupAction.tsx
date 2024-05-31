@@ -2,6 +2,11 @@ import React from "react";
 import { Offcanvas } from "react-bootstrap";
 import { Logger } from "../Logger";
 
+
+type StateType = {
+    PopupActionData: PopupActionDataStructure | null,
+};
+
 export interface PopupActionDataStructure {
     Title: string,
     Steps: {
@@ -11,20 +16,18 @@ export interface PopupActionDataStructure {
     Progress: number,
     Data: any,
 }
-export class PopupAction extends React.Component {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            "PopupActionData": null,
-        }
+
+export class PopupAction extends React.Component<{}, StateType> {
+    state = {
+        PopupActionData: null,
     }
     render(): React.ReactNode {
         Logger.Output("Rendered: PopupAction", Logger.LEVEL.DEBUG);
-        const PopupActionData = this.state["PopupActionData" as keyof typeof this.state];
+        const PopupActionData = this.state.PopupActionData;
         if (!PopupActionData) {
             return null;
         }
-        const RealData = PopupActionData as PopupActionDataStructure;
+        const RealData: PopupActionDataStructure = PopupActionData;
         return <Offcanvas placement="end" backdrop="static" show="true" id="OffcanvasElement" onHide={() => { this.setState({ "PopupActionData": null }); }}>
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title>{RealData.Title}</Offcanvas.Title>

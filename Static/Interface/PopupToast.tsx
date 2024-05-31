@@ -3,19 +3,23 @@ import { Badge } from "react-bootstrap";
 import { MessagePipeInstance } from "../MessagePipe";
 import { Logger } from "../Logger";
 
+type StateType = {
+    PopupToastData: PopupToastDataStructure[],
+};
+
 export interface PopupToastDataStructure {
     Success: boolean,
     Content: string,
 }
 
-export class PopupToast extends React.Component {
+export class PopupToast extends React.Component<{}, StateType> {
+    state = {
+        PopupToastData: [],
+    }
     constructor(props: any) {
         super(props);
-        this.state = {
-            "PopupToastData": [],
-        };
         MessagePipeInstance.Register("PopupToast", (Data: PopupToastDataStructure) => {
-            const RealData = this.state["PopupToastData" as keyof typeof this.state] as PopupToastDataStructure[];
+            const RealData: PopupToastDataStructure[] = this.state.PopupToastData;
             RealData.push(Data);
             this.setState({ "PopupToastData": RealData });
             setTimeout(() => {
@@ -29,7 +33,7 @@ export class PopupToast extends React.Component {
         return <div className="position-fixed top-0 w-100 p-3 z-3 text-center fs-4">
             {
                 (() => {
-                    const RealData = this.state["PopupToastData" as keyof typeof this.state] as PopupToastDataStructure[];
+                    const RealData: PopupToastDataStructure[] = this.state.PopupToastData;
                     if (RealData.length == 0) {
                         return null;
                     }
@@ -44,6 +48,6 @@ export class PopupToast extends React.Component {
                     })
                 })()
             }
-        </div>;
+        </div >;
     }
 }

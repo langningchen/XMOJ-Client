@@ -10,7 +10,9 @@
     ClassName Name(Database);                                     \
     Name.Input = this->APIParams;                                 \
     Name.Call();                                                  \
-    APIResults = Name.Output;                                     \
+    APIResults["Data"] = Name.Output;                             \
+    APIResults["Success"] = Name.Success;                         \
+    APIResults["Message"] = Name.Message;                         \
 }
 
 class API_PROCEED

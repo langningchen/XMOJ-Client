@@ -6,16 +6,13 @@ public:
     class INPUT
     {
     public:
-        std::string XMOJUsername;
-        std::string XMOJPassword;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(INPUT, XMOJUsername, XMOJPassword)
+        std::map<std::string, std::string> Settings;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(INPUT, Settings)
     } Input;
     class OUTPUT
     {
     public:
-        bool Success;
-        std::string Message;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(OUTPUT, Success, Message)
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE_BLANK(OUTPUT)
     } Output;
     using API::API;
     void Call() override;

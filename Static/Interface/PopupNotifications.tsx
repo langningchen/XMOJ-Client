@@ -3,20 +3,24 @@ import { Toast } from "react-bootstrap";
 import { MessagePipeInstance } from "../MessagePipe";
 import { Logger } from "../Logger";
 
+type StateType = {
+    PopupNotificationsData: PopupNotificationsDataStructure[],
+};
+
 export interface PopupNotificationsDataStructure {
     Success: boolean,
     Title: string,
     Content: string,
 }
 
-export class PopupNotifications extends React.Component {
+export class PopupNotifications extends React.Component<{}, StateType> {
+    state = {
+        PopupNotificationsData: [],
+    };
     constructor(props: any) {
         super(props);
-        this.state = {
-            "PopupNotificationsData": [],
-        };
         MessagePipeInstance.Register("PopupNotifications", (Data: PopupNotificationsDataStructure) => {
-            const RealData = this.state["PopupNotificationsData" as keyof typeof this.state] as PopupNotificationsDataStructure[];
+            const RealData: PopupNotificationsDataStructure[] = this.state.PopupNotificationsData;
             RealData.push(Data);
             this.setState({ "PopupNotificationsData": RealData });
         });
@@ -26,7 +30,7 @@ export class PopupNotifications extends React.Component {
         return <div className="position-fixed top-0 end-0 p-3 z-3">
             {
                 (() => {
-                    const RealData = this.state["PopupNotificationsData" as keyof typeof this.state] as PopupNotificationsDataStructure[];
+                    const RealData: PopupNotificationsDataStructure[] = this.state.PopupNotificationsData;
                     if (RealData.length == 0) {
                         return null;
                     }

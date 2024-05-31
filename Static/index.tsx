@@ -1,7 +1,11 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
 import { Load } from "./Interface/Load";
 import { Popup } from "./Interface/Popup";
+import { ContentRoot, PopupRoot } from "./Interface";
+import { Logger } from "./Logger";
 
-createRoot(document.getElementById("Content")!).render(<Load />);
-createRoot(document.getElementById("Popup")!).render(<Popup />);
+console.error = (message?: any, ...optionalParams: any[]) => {
+    Logger.Output(message as string + " " + optionalParams.join(" "), Logger.LEVEL.CRITICAL);
+}
+ContentRoot.render(<Load />);
+PopupRoot.render(<Popup />);

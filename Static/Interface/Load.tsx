@@ -1,15 +1,16 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
 import { Main } from "./Main";
 import { API } from "../API";
 import { Initiate } from "./Initiate";
 import { Logger } from "../Logger";
+import { ContentRoot } from ".";
 
 export class Load extends React.Component {
     private ShowDetails: boolean = false;
     constructor(props: any) {
         super(props);
         this.state = {
+            "检查设置": false,
             "登录": false,
             "刷新缓存": false,
         }
@@ -18,7 +19,7 @@ export class Load extends React.Component {
         Logger.Output("Rendered: Load", Logger.LEVEL.DEBUG);
         if (Object.values(this.state).every((Value) => Value)) {
             setTimeout(() => {
-                createRoot(document.getElementById("Content")!).render(<Main />);
+                ContentRoot.render(<Main />);
             }, 1000);
         }
         return <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: "100vh" }}>
@@ -49,12 +50,34 @@ export class Load extends React.Component {
         </div>;
     };
     async componentDidMount() {
-        debugger
+        var Stop: boolean = false;
+        await (async () => {
+            await API.Request("GetSettings", {}, () => { }, (Data: any) => {
+                const Settings = Data["Settings"];
+                var SettingsCorrect: boolean = true;
+                if (!Settings.hasOwnProperty("XMOJUsername") || !Settings.hasOwnProperty("XMOJPassword")) {
+                    SettingsCorrect = false;
+                }
+                if (SettingsCorrect) {
+                    this.setState({ "检查设置": true });
+                }
+                else {
+                    ContentRoot.render(<Initiate />);
+                    Stop = true;
+                }
+            }, () => {
+                ContentRoot.render(<Initiate />);
+                Stop = true;
+            }, () => { });
+        })();
+        if (Stop) {
+            return;
+        }
         await (async () => {
             await API.Request("Login", {}, () => { }, () => {
                 this.setState({ "登录": true });
             }, () => {
-                createRoot(document.getElementById("Content")!).render(<Initiate />);
+                ContentRoot.render(<Initiate />);
             }, () => { });
         })();
         (async () => {

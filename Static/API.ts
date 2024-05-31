@@ -22,11 +22,11 @@ export class API {
             },
             signal: Abort.signal,
             body: JSON.stringify(Data)
-        }).then(Response => {
+        }).then(async (Response) => {
             clearTimeout(Timeout);
             CallBack();
             if (Response.status == 200) {
-                Response.json().then(Response => {
+                await Response.json().then(Response => {
                     if (Response.Success === true) {
                         Logger.Output("API received: " + JSON.stringify(Response.Data), Logger.LEVEL.INFO);
                         SuccessCallback(Response.Data);

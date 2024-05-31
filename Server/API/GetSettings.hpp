@@ -11,11 +11,8 @@ public:
     class OUTPUT
     {
     public:
-        bool Success;
-        std::string Message;
-        std::string XMOJUsername;
-        std::string XMOJPassword;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(OUTPUT, Success, Message, XMOJUsername, XMOJPassword)
+        std::map<std::string, std::string> Settings;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(OUTPUT, Settings)
     } Output;
     using API::API;
     void Call() override;

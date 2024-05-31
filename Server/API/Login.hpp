@@ -11,9 +11,7 @@ public:
     class OUTPUT
     {
     public:
-        bool Success;
-        std::string Message;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(OUTPUT, Success, Message)
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE_BLANK(OUTPUT)
     } Output;
     using API::API;
     void Call() override;
