@@ -7,12 +7,9 @@
 [submodule "Backend/Libraries/cpp-httplib"]
 	path = Backend/Libraries/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib.git
-[submodule "Backend/Libraries/curl"]
-	path = Backend/Libraries/curl
-	url = https://github.com/curl/curl.git
 [submodule "Backend/Libraries/mbedtls"]
 	path = Backend/Libraries/mbedtls
 	url = https://github.com/Mbed-TLS/mbedtls.git
-[submodule "Backend/Libraries/wolfssl"]
-	path = Backend/Libraries/wolfssl
-	url = https://github.com/wolfssl/wolfssl.git
+[submodule "Backend/Libraries/curl"]
+	path = Backend/Libraries/curl
+	url = https://github.com/curl/curl.git
