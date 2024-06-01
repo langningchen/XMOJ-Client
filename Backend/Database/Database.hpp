@@ -2,6 +2,7 @@
 #include <sqlite3.h>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <string>
+#include <functional>
 #include <vector>
 #include <Utilities/Logger.hpp>
 #include <Utilities/Assert.hpp>
@@ -91,7 +92,7 @@ public:
     DATABASE();
     ~DATABASE();
     void Initialize();
-    void Execute(std::string Query, std::vector<std::pair<std::string, SQL_DATA::SQL_DATA_TYPE>> Values = {}, std::function<void(SQLite::Statement)> Callback = [](){});
+    void Execute(std::string Query, std::vector<std::pair<std::string, SQL_DATA::SQL_DATA_TYPE>> Values = {}, std::function<void(SQLite::Statement *)> Callback = nullptr);
     void Drop(std::string TableName);
     SQL_DATA Select(std::string TableName, std::initializer_list<std::string> Columns,
                     std::initializer_list<SQL_CONDITION> Conditions = {}, std::initializer_list<SQL_ORDER> Orders = {});

@@ -26,6 +26,7 @@ set(GEN_FILES ON CACHE BOOL "" FORCE)
 add_subdirectory(Libraries/mbedtls)
 include_directories(Libraries/mbedtls/include)
 
+set(CURL_USE_MBEDTLS ON CACHE BOOL "" FORCE)
 set(MBEDTLS_INCLUDE_DIRS Libraries/mbedtls CACHE PATH "" FORCE)
 set(MBEDTLS_LIBRARY ${CMAKE_BINARY_DIR}/Libraries/mbedtls/library/libmbedtls.a CACHE FILEPATH "" FORCE)
 set(MBEDX509_LIBRARY ${CMAKE_BINARY_DIR}/Libraries/mbedtls/library/libmbedx509.a CACHE FILEPATH "" FORCE)
@@ -36,6 +37,7 @@ include_directories(Libraries/curl/include)
 set(LIBS
     SQLiteCpp
     libcurl
+    mbedtls
 )
 
 aux_source_directory(. SourceFiles)

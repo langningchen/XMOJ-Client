@@ -29,22 +29,23 @@ void DATABASE::Initialize()
             if (TableExists)
                 Drop(TableName);
             Execute(Table);
-       }
+        }
         else
             GeneralLogger.Output(Logger::L_DEBUG, "Table ", TableName, " already exists");
     }
 }
 
-void DATABASE::Execute(std::string Query, std::vector<std::pair<std::string, SQL_DATA::SQL_DATA_TYPE>> Values = {}, std::function<void(SQLite::Statement)> Callback = [](SQLite::Statement){})
+void DATABASE::Execute(std::string Query, std::vector<std::pair<std::string, SQL_DATA::SQL_DATA_TYPE>> Values, std::function<void(SQLite::Statement *)> Callback)
 {
-    ASSERT_SAME(std::count(Query, '?'), Data.size());
+    ASSERT_SAME((size_t)std::count(Query.begin(), Query.end(), '?'), Values.size());
     std::string OutputQuery = Query;
     SQLite::Statement Statement(*Database, Query);
     ASSERT_DATABASE_OK(Statement);
+    int Counter = 0;
     for (auto &Value : Values)
     {
         Counter++;
-        OutputQuery = OutputQuery.replce(ASSERT_DIFFERENT(OutputQuery.find("?"), std::string::npos), 1, std::string(Value.second));
+        OutputQuery = OutputQuery.replace(ASSERT_DIFFERENT(OutputQuery.find("?"), std::string::npos), 1, std::string(Value.second));
         switch (Value.second.GetType())
         {
         case SQL_DATA::SQL_DATA_TYPE::INTEGER:
@@ -69,12 +70,13 @@ void DATABASE::Execute(std::string Query, std::vector<std::pair<std::string, SQL
         ASSERT_DATABASE_OK(Statement);
     }
     GeneralLogger.Output(Logger::L_DEBUG, "Executing query: ", OutputQuery);
-    if (CallBack == [](SQLite::Statement){})
+    if (Callback == nullptr)
         Statement.exec();
     else
         while (Statement.executeStep())
         {
-            Callback(Statement);
+            Callback(&Statement);
+            ASSERT_DATABASE_OK(Statement);
         }
     ASSERT_DATABASE_OK(Statement);
 }

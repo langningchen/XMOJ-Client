@@ -28,8 +28,7 @@ module.exports = {
         })],
     },
     performance: {
-        maxEntrypointSize: 512000,
-        maxAssetSize: 512000
+        hints: false,
     },
     plugins: [
         new CopyWebpackPlugin({
@@ -41,4 +40,5 @@ module.exports = {
             ],
         }),
     ],
+    watch: true,
 };

@@ -100,13 +100,5 @@
         "XMOJ"
     ],
     "C_Cpp.errorSquiggles": "enabled",
-    "emeraldwalk.runonsave": {
-        "commands": [
-            {
-                "match": "\\.(html|css|ts|js)",
-                "cmd": "cmake --build Build --target ServerStatic",
-            }
-        ]
-    },
     "cmake.sourceDirectory": "C:/Users/Son/XMOJ-Client/Backend"
 }

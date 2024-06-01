@@ -5,13 +5,16 @@ std::string STRING_OPERATION::MD5(const std::string &Input)
 {
     mbedtls_md5_context Context;
     mbedtls_md5_starts(&Context);
-    mbedtls_md5_update(&Context, (const unsigned char *)Input.c_str(), Input.size());
+    mbedtls_md5_update(&Context, reinterpret_cast<const unsigned char *>(Input.c_str()), Input.size());
     unsigned char Output[16];
     mbedtls_md5_finish(&Context, Output);
-    mbedtls_md5_free(&Context);
     std::string Result;
     for (int i = 0; i < 16; i++)
-        Result += Output[i];
+    {
+        char Buffer[3];
+        sprintf(Buffer, "%02x", Output[i]);
+        Result += Buffer;
+    }
     return Result;
 }
 
