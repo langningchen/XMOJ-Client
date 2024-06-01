@@ -91,7 +91,7 @@ public:
     DATABASE();
     ~DATABASE();
     void Initialize();
-    void Execute(std::string Query);
+    void Execute(std::string Query, std::vector<std::pair<std::string, SQL_DATA::SQL_DATA_TYPE>> Values = {}, std::function<void(SQLite::Statement)> Callback = [](){});
     void Drop(std::string TableName);
     SQL_DATA Select(std::string TableName, std::initializer_list<std::string> Columns,
                     std::initializer_list<SQL_CONDITION> Conditions = {}, std::initializer_list<SQL_ORDER> Orders = {});

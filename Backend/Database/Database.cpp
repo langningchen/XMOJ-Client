@@ -29,18 +29,53 @@ void DATABASE::Initialize()
             if (TableExists)
                 Drop(TableName);
             Execute(Table);
-        }
+       }
         else
             GeneralLogger.Output(Logger::L_DEBUG, "Table ", TableName, " already exists");
     }
 }
 
-void DATABASE::Execute(std::string Query)
+void DATABASE::Execute(std::string Query, std::vector<std::pair<std::string, SQL_DATA::SQL_DATA_TYPE>> Values = {}, std::function<void(SQLite::Statement)> Callback = [](SQLite::Statement){})
 {
-    GeneralLogger.Output(Logger::L_DEBUG, "Executing query: ", Query);
+    ASSERT_SAME(std::count(Query, '?'), Data.size());
+    std::string OutputQuery = Query;
     SQLite::Statement Statement(*Database, Query);
     ASSERT_DATABASE_OK(Statement);
-    Statement.exec();
+    for (auto &Value : Values)
+    {
+        Counter++;
+        OutputQuery = OutputQuery.replce(ASSERT_DIFFERENT(OutputQuery.find("?"), std::string::npos), 1, std::string(Value.second));
+        switch (Value.second.GetType())
+        {
+        case SQL_DATA::SQL_DATA_TYPE::INTEGER:
+            Statement.bind(Counter, int(Value.second));
+            break;
+        case SQL_DATA::SQL_DATA_TYPE::REAL:
+            Statement.bind(Counter, double(Value.second));
+            break;
+        case SQL_DATA::SQL_DATA_TYPE::TEXT:
+            Statement.bind(Counter, std::string(Value.second));
+            break;
+        case SQL_DATA::SQL_DATA_TYPE::BOOLEAN:
+            Statement.bind(Counter, bool(Value.second));
+            break;
+        case SQL_DATA::SQL_DATA_TYPE::NULL_TYPE:
+            Statement.bind(Counter);
+            break;
+        default:
+            ASSERT_EXPRESSION(false);
+            break;
+        }
+        ASSERT_DATABASE_OK(Statement);
+    }
+    GeneralLogger.Output(Logger::L_DEBUG, "Executing query: ", OutputQuery);
+    if (CallBack == [](SQLite::Statement){})
+        Statement.exec();
+    else
+        while (Statement.executeStep())
+        {
+            Callback(Statement);
+        }
     ASSERT_DATABASE_OK(Statement);
 }
 void DATABASE::Drop(std::string TableName)

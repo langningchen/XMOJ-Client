@@ -45,7 +45,7 @@ WEB_REQUEST *WEB_REQUEST::Body(std::string Body, CONTENT_TYPE ContentType)
 }
 WEB_REQUEST *WEB_REQUEST::Send()
 {
-    GeneralLogger.Output(Logger::L_DEBUG, "Sending ", (Method == GET ? "GET" : "POST"), " request to ", URL);
+    GeneralLogger.Output(Logger::L_DEBUG, "Sending ", (Method == GET ? "GET" : "POST"), " request to ", URL, (RequestBody == "" ? "" : ", with body " + RequestBody));
     Curl = ASSERT_DIFFERENT(curl_easy_init(), nullptr);
     ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_URL, URL.c_str()));
     ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_USERAGENT, USER_AGENT.c_str()));
@@ -66,7 +66,7 @@ WEB_REQUEST *WEB_REQUEST::Send()
     ASSERT_CURL_OK(Curl, curl_easy_perform(Curl));
     ASSERT_CURL_OK(Curl, curl_easy_getinfo(Curl, CURLINFO_RESPONSE_CODE, &ResponseCode));
     curl_easy_cleanup(Curl);
-    GeneralLogger.Output(Logger::L_DEBUG, "Received response code ", ResponseCode);
+    GeneralLogger.Output(Logger::L_DEBUG, "Received response code ", ResponseCode, (ResponseBody == "" ? "" : ", with body " + ResponseBody));
     return this;
 }
 int WEB_REQUEST::GetResponseCode()
