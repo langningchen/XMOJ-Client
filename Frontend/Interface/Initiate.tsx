@@ -35,11 +35,8 @@ export class Initiate extends React.Component<{}, StateType> {
                 <h1 className="mb-3">XMOJ账户</h1>
                 <p>请填写您的XMOJ账户信息，以便我们验证您的身份并获取相关数据。</p>
                 <Formik.Formik
+		    onsubmit={() => {}}
                     initialValues={{ XMOJUsername: this.Settings?.XMOJUsername, XMOJPassword: this.Settings?.XMOJPassword }}
-                    onSubmit={(Values) => {
-                        this.Settings!.XMOJUsername = Values.XMOJUsername!;
-                        this.Settings!.XMOJPassword = Values.XMOJPassword!;
-                    }}
                     validationSchema={yup.object().shape({
                         XMOJUsername: yup.string().required("请填写用户名"),
                         XMOJPassword: yup.string().required("请填写密码"),

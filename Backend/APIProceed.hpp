@@ -2,7 +2,6 @@
 #include <map>
 #include <string>
 #include <functional>
-#include <windows.h>
 #include <nlohmann/json.hpp>
 #include <Database.hpp>
 

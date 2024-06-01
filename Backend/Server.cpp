@@ -56,7 +56,7 @@ void SERVER::Start()
     std::thread(
         [&]()
         {
-            Server.listen("localhost", 80);
+            ASSERT_SAME(Server.listen("0.0.0.0", 8080), 0);
         })
         .detach();
     Status = STARTED;
