@@ -1,4 +1,10 @@
+@font-face {
+    font-family: "CascadiaCode";
+    src: url("CascadiaCode.ttf");
+}
+
 html,
 body {
     height: 100%;
+    font-family: "CascadiaCode";
 }
