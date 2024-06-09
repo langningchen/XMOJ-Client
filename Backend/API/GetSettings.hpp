@@ -1,5 +1,6 @@
 #pragma once
 #include "API.hpp"
+
 class GET_SETTINGS : public API
 {
 public:

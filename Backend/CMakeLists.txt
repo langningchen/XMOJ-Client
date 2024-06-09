@@ -19,6 +19,8 @@ set(SQLITECPP_RUN_CPPLINT OFF CACHE BOOL "" FORCE)
 add_subdirectory(Libraries/SQLiteCpp)
 include_directories(Libraries/SQLiteCpp/include)
 
+add_subdirectory(Libraries/htmlparser)
+
 add_subdirectory(Libraries/json)
 include_directories(Libraries/json/include)
 
@@ -38,6 +40,7 @@ set(LIBS
     SQLiteCpp
     libcurl
     mbedtls
+    htmlparser
 )
 
 aux_source_directory(. SourceFiles)

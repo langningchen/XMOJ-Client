@@ -3,11 +3,16 @@
 
 void LOGIN::Call()
 {
-    std::string CSRF = XMOJ().GetCSRF();
     std::string UserID = SETTINGS::Get("XMOJUsername");
     std::string Password = STRING_OPERATION::MD5(SETTINGS::Get("XMOJPassword"));
-    std::string Body = "user_id=" + UserID + "&password=" + Password + "&submit=&csrf=" + CSRF;
-    std::string Response = WEB_REQUEST().Post("https://www.xmoj.tech/login.php")->Body(Body, WEB_REQUEST::FORM)->Send()->AssertResponseCode(200)->GetResponseBody();
+    if (XMOJ::GetLoggedInUsername() == UserID)
+    {
+        Success = true;
+        Message = "已登录";
+        return;
+    }
+    std::string Body = "user_id=" + UserID + "&password=" + Password + "&submit=&csrf=" + XMOJ::GetCSRF();
+    std::string Response = WEB_REQUEST().Post(SETTINGS::Get("XMOJBaseURL") + "/login.php")->Body(Body, WEB_REQUEST::FORM)->Send()->AssertResponseCode(200)->GetResponseBody();
     if (Response.find("history.go(-2)") != std::string::npos)
     {
         Success = true;

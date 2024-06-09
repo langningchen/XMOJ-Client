@@ -1,6 +1,7 @@
 import React from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { Logger } from "../Logger";
+import { MessagePipeInstance } from "../MessagePipe";
 
 type StateType = {
     HeaderBreadcrumbData: HeaderBreadcrumbDataStructure[],
@@ -8,17 +9,17 @@ type StateType = {
 
 export interface HeaderBreadcrumbDataStructure {
     Title: string,
-    Callback: () => void,
+    Component: React.ReactNode,
 }
 
 export class HeaderBreadcrumb extends React.Component<{}, StateType> {
     state = {
-        HeaderBreadcrumbData: [
-            {
-                Title: "XMOJ-Client",
-                Callback: () => { },
-            },
-        ],
+        HeaderBreadcrumbData: [],
+    };
+    componentDidMount(): void {
+        MessagePipeInstance.Register("SetHeaderBreadcrumb", (Data: HeaderBreadcrumbDataStructure[]) => {
+            this.setState({ HeaderBreadcrumbData: Data });
+        });
     }
     render(): React.ReactNode {
         Logger.Output("Rendered: HeaderBreadcrumb", Logger.LEVEL.DEBUG);
@@ -26,11 +27,9 @@ export class HeaderBreadcrumb extends React.Component<{}, StateType> {
             {
                 (() => {
                     const RealData: HeaderBreadcrumbDataStructure[] = this.state.HeaderBreadcrumbData;
-                    return RealData.map((Data, Index) => {
+                    return RealData.map((Data) => {
                         return <Breadcrumb.Item onClick={() => {
-                            RealData.splice(Index + 1, RealData.length - Index - 1);
-                            this.setState({ "HeaderBreadcrumbData": RealData });
-                            Data.Callback();
+                            MessagePipeInstance.Send("SetBodyContent", Data.Component);
                         }}>{Data.Title}</Breadcrumb.Item>
                     })
                 })()

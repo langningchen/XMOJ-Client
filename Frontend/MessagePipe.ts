@@ -1,3 +1,4 @@
+import React from "react";
 import { Logger } from "./Logger";
 
 export class MessagePipe {
@@ -7,7 +8,14 @@ export class MessagePipe {
         this.Pipe[Key] = Callback;
     }
     Send(Key: string, Data: any) {
-        Logger.Output("MessagePipe: Sending key: " + Key + " Data: " + JSON.stringify(Data), Logger.LEVEL.DEBUG);
+        Logger.Output("MessagePipe: Sending key: " + Key + " Data: " +
+            JSON.stringify(Data, (Key, Value) => {
+                if (React.isValidElement(Value)) {
+                    return "[ReactElement]";
+                }
+                return Value;
+            }),
+            Logger.LEVEL.DEBUG);
         if (this.Pipe[Key]) {
             this.Pipe[Key](Data);
         }

@@ -1,5 +1,6 @@
 #include "StringOperation.hpp"
 #include <mbedtls/md5.h>
+#include "Assert.hpp"
 
 std::string STRING_OPERATION::MD5(const std::string &Input)
 {
@@ -31,4 +32,22 @@ std::vector<std::string> STRING_OPERATION::SpiltString(const std::string &Input,
     }
     Result.push_back(Input.substr(Start, End));
     return Result;
+}
+
+std::string STRING_OPERATION::GetMiddle(const std::string &Input, const std::string &Start, const std::string &End, bool AllowEmpty)
+{
+    size_t StartPos = Input.find(Start);
+    if (StartPos == std::string::npos)
+    {
+        ASSERT_EXPRESSION(AllowEmpty);
+        return "";
+    }
+    StartPos += Start.size();
+    size_t EndPos = Input.find(End, StartPos);
+    if (EndPos == std::string::npos)
+    {
+        ASSERT_EXPRESSION(AllowEmpty);
+        return "";
+    }
+    return Input.substr(StartPos, EndPos - StartPos);
 }

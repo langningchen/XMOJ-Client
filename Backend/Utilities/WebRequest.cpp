@@ -1,6 +1,7 @@
 #include "WebRequest.hpp"
 #include <stdexcept>
 #include <Utilities/Assert.hpp>
+#include <Classes/Settings.hpp>
 
 size_t WEB_REQUEST::WriteCallback(void *Contents, size_t Size, size_t Count, void *UserData)
 {
@@ -56,6 +57,8 @@ WEB_REQUEST *WEB_REQUEST::Send()
     ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_SSL_VERIFYHOST, 0L));
     ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_SSL_VERIFYPEER, 0L));
     ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_FOLLOWLOCATION, 1L));
+    if (SETTINGS::Has("PHPSESSID"))
+        ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_COOKIE, ("PHPSESSID=" + SETTINGS::Get("PHPSESSID")).c_str()));
     if (Method == POST)
     {
         ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_POST, 1L));
@@ -65,6 +68,15 @@ WEB_REQUEST *WEB_REQUEST::Send()
         ASSERT_CURL_OK(Curl, curl_easy_setopt(Curl, CURLOPT_HTTPHEADER, curl_slist_append(nullptr, Header.c_str())));
     ASSERT_CURL_OK(Curl, curl_easy_perform(Curl));
     ASSERT_CURL_OK(Curl, curl_easy_getinfo(Curl, CURLINFO_RESPONSE_CODE, &ResponseCode));
+    for (auto Header : ResponseHeaders)
+    {
+        if (Header.find("Set-Cookie: PHPSESSID=") != std::string::npos)
+        {
+            size_t Start = Header.find("PHPSESSID=") + 10;
+            size_t End = Header.find(";", Start);
+            SETTINGS::Set("PHPSESSID", Header.substr(Start, End - Start));
+        }
+    }
     curl_easy_cleanup(Curl);
     GeneralLogger.Output(Logger::L_DEBUG, "Received response code ", ResponseCode, (ResponseBody == "" ? "" : ", with body " + ResponseBody));
     return this;

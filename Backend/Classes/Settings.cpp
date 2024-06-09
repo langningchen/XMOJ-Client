@@ -20,7 +20,7 @@ void SETTINGS::Set(std::string Name, std::string Value)
     else
         Database.Update("Settings", {{"Value", Value}}, {{"Key", Name}});
 }
-bool SETTINGS::Check(std::string Name)
+bool SETTINGS::Has(std::string Name)
 {
     return Database.Select("Settings", {"Value"}, {{"Key", Name}}).Data.size();
 }

@@ -10,7 +10,7 @@ type StateType = {
 export interface PopupActionDataStructure {
     Title: string,
     Steps: {
-        Element: JSX.Element,
+        Element: React.ReactNode,
         Next: () => void,
     }[],
     Progress: number,

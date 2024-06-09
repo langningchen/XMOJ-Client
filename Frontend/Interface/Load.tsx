@@ -6,15 +6,12 @@ import { Logger } from "../Logger";
 import { ContentRoot } from ".";
 
 export class Load extends React.Component {
-    private ShowDetails: boolean = false;
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            "检查设置": false,
-            "登录": false,
-            "刷新缓存": false,
-        }
+    state = {
+        "检查设置": false,
+        "登录": false,
+        "刷新缓存": false,
     }
+    private ShowDetails: boolean = false;
     render() {
         Logger.Output("Rendered: Load", Logger.LEVEL.DEBUG);
         if (Object.values(this.state).every((Value) => Value)) {
@@ -55,7 +52,7 @@ export class Load extends React.Component {
             await API.Request("GetSettings", {}, () => { }, (Data: any) => {
                 const Settings = Data["Settings"];
                 var SettingsCorrect: boolean = true;
-                if (!Settings.hasOwnProperty("XMOJUsername") || !Settings.hasOwnProperty("XMOJPassword")) {
+                if (!Settings.hasOwnProperty("XMOJUsername") || !Settings.hasOwnProperty("XMOJPassword") || !Settings.hasOwnProperty("XMOJBaseURL")) {
                     SettingsCorrect = false;
                 }
                 if (SettingsCorrect) {

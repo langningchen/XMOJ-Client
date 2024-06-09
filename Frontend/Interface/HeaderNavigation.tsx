@@ -1,13 +1,32 @@
 import React from "react";
 import { Logger } from "../Logger";
+import { Welcome } from "./Contents/Welcome";
+import { MessagePipeInstance } from "../MessagePipe";
+import { Problems } from "./Contents/Problems";
 
 export class HeaderNavigation extends React.Component {
     render(): React.ReactNode {
+        const HeaderNavigationData = [
+            {
+                Title: "欢迎",
+                Component: <Welcome />,
+            },
+            {
+                Title: "题目",
+                Component: <Problems />,
+            },
+        ];
         Logger.Output("Rendered: HeaderNavigation", Logger.LEVEL.DEBUG);
         return <div className="border rounded p-2 m-1" style={{ flex: 1 }}>
-            问题
-            竞赛
-            状态
+            <div className="d-flex justify-content-center">
+                {
+                    HeaderNavigationData.map((Data) => {
+                        return <a className="nav-link mx-2" href="#" onClick={() => {
+                            MessagePipeInstance.Send("SetBodyContent", Data.Component);
+                        }}>{Data.Title}</a>
+                    })
+                }
+            </div>
         </div>;
     }
 }

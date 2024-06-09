@@ -7,6 +7,7 @@ class STRING_OPERATION
 public:
     static std::string MD5(const std::string &Input);
     static std::vector<std::string> SpiltString(const std::string &Input, const std::string &Delimiter);
+    static std::string GetMiddle(const std::string &Input, const std::string &Start, const std::string &End, bool AllowEmpty = false);
     template <typename Type>
     static constexpr bool CanConvertToString = std::is_arithmetic_v<Type> ||
                                                (std::is_convertible_v<Type, std::string> && !std::is_null_pointer_v<Type>);

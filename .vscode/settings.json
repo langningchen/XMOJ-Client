@@ -97,6 +97,7 @@
         "autohide",
         "Formik",
         "Offcanvas",
+        "PHPSESSID",
         "XMOJ"
     ],
     "C_Cpp.errorSquiggles": "enabled",

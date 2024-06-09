@@ -15,6 +15,8 @@ void DATABASE::Initialize()
 {
     const std::vector<std::string> Tables = {
         "CREATE TABLE Settings (Key TEXT PRIMARY KEY, Value TEXT)",
+        "CREATE TABLE Problems (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, InputFilename TEXT, OutputFilename TEXT, TimeLimit INTEGER, MemoryLimit INTEGER, EnableO2 BOOLEAN, SubmitCount INTEGER, SolvedCount INTEGER, Description TEXT, InputFormat TEXT, OutputFormat TEXT, Samples TEXT, DataRange TEXT, Hint TEXT)",
+        "CREATE TABLE Contests (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, StartTime INTEGER, EndTime INTEGER, Problems TEXT, Creator TEXT)",
     };
     for (auto &Table : Tables)
     {
