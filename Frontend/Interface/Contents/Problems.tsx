@@ -18,8 +18,8 @@ export class Problems extends React.Component {
         ]);
         MessagePipeInstance.Send("SetBodyList", [
             {
-                "Title": "题目1",
-                "Component": <Problem ProblemID={1} />,
+                "Title": "7125",
+                "Component": <Problem ProblemID={7125} />,
             },
         ]);
     }

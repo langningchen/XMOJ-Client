@@ -26,7 +26,7 @@ export class PopupNotifications extends React.Component<{}, StateType> {
     }
     render(): React.ReactNode {
         Logger.Output("Rendered: PopupNotifications", Logger.LEVEL.DEBUG);
-        return <div className="position-fixed top-0 end-0 p-3 z-n1">
+        return <div className="position-fixed top-0 end-0 p-3 z-3 pe-none">
             {
                 (() => {
                     const RealData: PopupNotificationsDataStructure[] = this.state.PopupNotificationsData;
@@ -37,7 +37,7 @@ export class PopupNotifications extends React.Component<{}, StateType> {
                         return <Toast show={true} onClose={() => {
                             RealData.splice(Index, 1);
                             this.setState({ "PopupNotificationsData": RealData });
-                        }} delay={5000} autohide className="mb-2 z-3">
+                        }} delay={5000} autohide className="mb-2 pe-auto">
                             <Toast.Header>
                                 {Data.Success ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
                                 <strong className="ms-2 me-auto">{Data.Title}</strong>

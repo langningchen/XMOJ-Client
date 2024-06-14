@@ -5,6 +5,5 @@ void SET_SETTINGS::Call()
 {
     for (auto &Setting : Input.Settings)
         SETTINGS::Set(Setting.first, Setting.second);
-    Success = true;
-    Message = "修改设置成功";
+    throw API_RESULT(true, "修改设置成功");
 }

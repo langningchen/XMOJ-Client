@@ -4,6 +4,5 @@
 void GET_SETTINGS::Call()
 {
     Output.Settings = SETTINGS::GetAll();
-    Success = true;
-    Message = "获取设置成功";
+    throw API_RESULT(true, "获取设置成功", Output);
 }

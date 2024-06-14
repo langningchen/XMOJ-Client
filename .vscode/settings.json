@@ -91,7 +91,9 @@
         "md5.h": "c",
         "options.h": "c",
         "sha.h": "c",
-        "stacktrace": "cpp"
+        "stacktrace": "cpp",
+        "tree.h": "c",
+        "xmlversion.h": "c"
     },
     "cSpell.words": [
         "autohide",

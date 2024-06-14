@@ -19,7 +19,11 @@ set(SQLITECPP_RUN_CPPLINT OFF CACHE BOOL "" FORCE)
 add_subdirectory(Libraries/SQLiteCpp)
 include_directories(Libraries/SQLiteCpp/include)
 
-add_subdirectory(Libraries/htmlparser)
+set(LIBXML2_WITH_TESTS OFF CACHE BOOL "" FORCE)
+set(LIBXML2_WITH_ICONV OFF CACHE BOOL "" FORCE)
+add_subdirectory(Libraries/libxml2)
+include_directories(Libraries/libxml2/include)
+include_directories(${CMAKE_BINARY_DIR}/Libraries/libxml2)
 
 add_subdirectory(Libraries/json)
 include_directories(Libraries/json/include)
@@ -40,7 +44,6 @@ set(LIBS
     SQLiteCpp
     libcurl
     mbedtls
-    htmlparser
 )
 
 aux_source_directory(. SourceFiles)
@@ -48,8 +51,6 @@ aux_source_directory(API SourceFiles)
 aux_source_directory(Classes SourceFiles)
 aux_source_directory(Database SourceFiles)
 aux_source_directory(Utilities SourceFiles)
-add_executable(XMOJ-Client
-    ${SourceFiles}
-)
+add_executable(XMOJ-Client ${SourceFiles})
 
 target_link_libraries(XMOJ-Client PRIVATE ${LIBS})

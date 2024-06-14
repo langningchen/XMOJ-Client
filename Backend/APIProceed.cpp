@@ -17,15 +17,19 @@ API_PROCEED::API_PROCEED(DATABASE *Database, std::string APIName, nlohmann::json
 nlohmann::json API_PROCEED::Call()
 {
     if (APIFunctions.find(APIName) == APIFunctions.end())
-        return {{"Success", false}, {"Message", "接口不存在"}};
+        return API_RESULT(false, "接口不存在");
     try
     {
         APIFunctions[APIName]();
+        return API_RESULT(false, "接口没有返回结果");
+    }
+    catch (const API_RESULT &Result)
+    {
+        return Result;
     }
     catch (const std::exception &e)
     {
         GeneralLogger.Output(Logger::L_ERROR, "API error: ", e.what());
         return {{"Success", false}, {"Message", "系统后台运行错误"}};
     }
-    return APIResults;
 }

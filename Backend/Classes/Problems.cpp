@@ -199,7 +199,7 @@ $(function() {
 #include "Problems.hpp"
 #include <Database.hpp>
 #include <Utilities/WebRequest.hpp>
-#include <htmlparser/html.hpp>
+#include <libxml/parser.h>
 #include <Classes/Settings.hpp>
 
 PROBLEM PROBLEMS::Get(int ID, bool NoCache)
@@ -212,17 +212,19 @@ PROBLEM PROBLEMS::Get(int ID, bool NoCache)
         if (HaveCache)
             Database.Delete("Problems", {{"ID", std::to_string(ID)}});
         std::string HTMLData = WEB_REQUEST().Get(SETTINGS::Get("XMOJBaseURL") + "/problem.php?id=" + std::to_string(ID))->Send()->AssertResponseCode(200)->GetResponseBody();
-        html::parser HTMLParser;
-        html::node_ptr Node = HTMLParser.parse(HTMLData);
-        Problem.Name = Node->select("h2.lang_cn")[0]->to_text();
-        Problem.InputFilename = Node->select("span.green:contains(输入文件:)")[0]->get_parent()->at(1)->to_text();
-        Problem.OutputFilename = Node->select("span.green:contains(输出文件:)")[0]->get_parent()->at(1)->to_text();
-        Problem.TimeLimit = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(时间限制:)")[0]->get_parent()->at(1)->to_text()), 0);
-        Problem.MemoryLimit = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(内存限制:)")[0]->get_parent()->at(1)->to_text()), 0);
-        Problem.SpecialJudge = Node->select("span.red:contains(Special Judge)").size();
-        Problem.EnableO2 = Node->select("span.green:contains(编译参数: -O2)").size();
-        Problem.SubmitCount = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(提交:)")[0]->get_parent()->at(1)->to_text()), 0);
-        Problem.SolvedCount = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(解决:)")[0]->get_parent()->at(1)->to_text()), 0);
+        if (HTMLData.find("题目不可用!!") != std::string::npos)
+            throw std::runtime_error("题目不可用");
+        // html::parser HTMLParser;
+        // html::node_ptr Node = HTMLParser.parse(HTMLData);
+        // Problem.Name = Node->select("h2.lang_cn")[0]->to_text();
+        // Problem.InputFilename = Node->select("span.green:contains(输入文件:)")[0]->get_parent()->at(1)->to_text();
+        // Problem.OutputFilename = Node->select("span.green:contains(输出文件:)")[0]->get_parent()->at(1)->to_text();
+        // Problem.TimeLimit = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(时间限制:)")[0]->get_parent()->at(1)->to_text()), 0);
+        // Problem.MemoryLimit = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(内存限制:)")[0]->get_parent()->at(1)->to_text()), 0);
+        // Problem.SpecialJudge = Node->select("span.red:contains(Special Judge)").size();
+        // Problem.EnableO2 = Node->select("span.green:contains(编译参数: -O2)").size();
+        // Problem.SubmitCount = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(提交:)")[0]->get_parent()->at(1)->to_text()), 0);
+        // Problem.SolvedCount = ASSERT_DIFFERENT(std::stoi(Node->select("span.green:contains(解决:)")[0]->get_parent()->at(1)->to_text()), 0);
     }
     else
     {

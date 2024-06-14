@@ -29,7 +29,7 @@ export class PopupToast extends React.Component<{}, StateType> {
     }
     render(): React.ReactNode {
         Logger.Output("Rendered: PopupToast", Logger.LEVEL.DEBUG);
-        return <div className="position-fixed top-0 w-100 p-3 z-n1 text-center fs-4">
+        return <div className="position-fixed top-0 w-100 p-3 z-3 text-center fs-4 pe-none">
             {
                 (() => {
                     const RealData: PopupToastDataStructure[] = this.state.PopupToastData;
@@ -37,11 +37,11 @@ export class PopupToast extends React.Component<{}, StateType> {
                         return null;
                     }
                     return RealData.map((Data) => {
-                        return <div className="mb-2">
+                        return <div className="mb-2 pe-auto">
                             {
                                 Data.Success ?
-                                    <Badge bg="success" className="px-3 py-2 z-3"><i className="bi bi-check-circle-fill me-2"></i>{Data.Content}</Badge> :
-                                    <Badge bg="danger" className="px-3 py-2 z-3"><i className="bi bi-x-circle-fill me-2"></i>{Data.Content}</Badge>
+                                    <Badge bg="success" className="px-3 py-2"><i className="bi bi-check-circle-fill me-2"></i>{Data.Content}</Badge> :
+                                    <Badge bg="danger" className="px-3 py-2"><i className="bi bi-x-circle-fill me-2"></i>{Data.Content}</Badge>
                             }
                         </div>;
                     })

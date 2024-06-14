@@ -1,6 +1,7 @@
 import React from "react";
 import { Logger } from "../Logger";
 import { MessagePipeInstance } from "../MessagePipe";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 type StateType = {
     BodyListData: BodyListDataStructure[];
@@ -23,13 +24,8 @@ export class BodyList extends React.Component<{}, StateType> {
     render(): React.ReactNode {
         Logger.Output("Rendered: BodyList", Logger.LEVEL.DEBUG);
         if (this.state.BodyListData.length === 0) {
-            return <div className="d-flex flex-column justify-content-center h-100">
-                <div className="d-flex justify-content-center">
-                    <h3 className="text-center">
-                        <i className="bi bi-question-diamond-fill"></i><br />
-                        暂无可用数据
-                    </h3>
-                </div>
+            return <div className="mt-3">
+                <LoadingSpinner />
             </div>;
         }
         return <div className="list-group list-group-flush">
