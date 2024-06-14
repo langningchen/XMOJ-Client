@@ -25,6 +25,7 @@ add_subdirectory(Libraries/json)
 include_directories(Libraries/json/include)
 
 set(GEN_FILES ON CACHE BOOL "" FORCE)
+set(DISABLE_PACKAGE_CONFIG_AND_INSTALL OFF CACHE BOOL "" FORCE)
 add_subdirectory(Libraries/mbedtls)
 include_directories(Libraries/mbedtls/include)
 
