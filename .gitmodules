@@ -1,15 +1,19 @@
 [submodule "Backend/Libraries/SQLiteCpp"]
 	path = Backend/Libraries/SQLiteCpp
 	url = https://github.com/srombauts/SQLiteCpp.git
+	branch = master
 [submodule "Backend/Libraries/json"]
 	path = Backend/Libraries/json
 	url = https://github.com/nlohmann/json.git
+	branch = master
 [submodule "Backend/Libraries/cpp-httplib"]
 	path = Backend/Libraries/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib.git
+	branch = master
 [submodule "Backend/Libraries/mbedtls"]
 	path = Backend/Libraries/mbedtls
 	url = https://github.com/Mbed-TLS/mbedtls.git
+	branch = master
 [submodule "Backend/Libraries/curl"]
 	path = Backend/Libraries/curl
 	url = https://github.com/curl/curl.git
