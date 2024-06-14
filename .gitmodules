@@ -17,6 +17,8 @@
 [submodule "Backend/Libraries/curl"]
 	path = Backend/Libraries/curl
 	url = https://github.com/curl/curl.git
+	branch = master
 [submodule "Backend/Libraries/libxml2"]
 	path = Backend/Libraries/libxml2
 	url = https://github.com/GNOME/libxml2.git
+	branch = master
