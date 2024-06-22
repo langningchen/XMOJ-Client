@@ -24,11 +24,11 @@ endfunction()
 CheckPythonModule(jsonschema)
 CheckPythonModule(jinja2)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -s -DNO_ASSERT")
-# set(CMAKE_EXE_LINKER_FLAGS "-static")
 set(CMAKE_CXX_STANDARD 17)
+add_compile_options(-Wall)
+add_compile_options("$<$<CONFIG:DEBUG>:-O0;-g>")
+add_compile_options("$<$<CONFIG:RELEASE>:-O3;-s;-DNO_ASSERT>")
+add_link_options("$<$<CONFIG:RELEASE>:-s>")
 
 include_directories(Libraries)
 include_directories(.)
@@ -42,13 +42,12 @@ set(LIBXML2_WITH_TESTS OFF CACHE BOOL "" FORCE)
 set(LIBXML2_WITH_ICONV OFF CACHE BOOL "" FORCE)
 add_subdirectory(Libraries/libxml2)
 include_directories(Libraries/libxml2/include)
-include_directories(${CMAKE_BINARY_DIR}/Libraries/libxml2)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/Libraries/libxml2)
 
 add_subdirectory(Libraries/json)
 include_directories(Libraries/json/include)
 
 set(GEN_FILES ON CACHE BOOL "" FORCE)
-set(DISABLE_PACKAGE_CONFIG_AND_INSTALL OFF CACHE BOOL "" FORCE)
 add_subdirectory(Libraries/mbedtls)
 include_directories(Libraries/mbedtls/include)
 
@@ -63,7 +62,6 @@ include_directories(Libraries/curl/include)
 set(LIBS
     SQLiteCpp
     libcurl
-    mbedtls
 )
 
 aux_source_directory(. SourceFiles)
