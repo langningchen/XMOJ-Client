@@ -317,5 +317,3 @@ bool DATABASE::IfTableExists(std::string TableName)
     SQL_DATA MasterData = Select("sqlite_master", {}, {{"type", "table"}, {"name", TableName}});
     return MasterData.Data.size() > 0;
 }
-
-DATABASE Database;

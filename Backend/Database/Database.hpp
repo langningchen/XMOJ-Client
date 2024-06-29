@@ -103,5 +103,3 @@ public:
     std::string GetTableSchema(std::string TableName);
     bool IfTableExists(std::string TableName);
 };
-
-extern DATABASE Database;
