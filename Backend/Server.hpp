@@ -1,24 +1,21 @@
 #pragma once
+#include <Database.hpp>
 #include <cpp-httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <Database.hpp>
 
-class SERVER
-{
-public:
-    enum STATUS
-    {
+class SERVER {
+  public:
+    enum STATUS {
         STARTED,
         STOPPED
     };
 
-private:
-    DATABASE *Database;
+  private:
     httplib::Server Server;
     STATUS Status;
 
-public:
-    SERVER(DATABASE *Database);
+  public:
+    SERVER();
     void Start();
     void Stop();
     STATUS GetStatus();

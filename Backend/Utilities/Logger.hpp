@@ -1,13 +1,11 @@
 #pragma once
+#include <Utilities/StringOperation.hpp>
 #include <iostream>
 #include <stdarg.h>
-#include <Utilities/StringOperation.hpp>
 
-class Logger
-{
-public:
-    enum LEVEL
-    {
+class Logger {
+  public:
+    enum LEVEL {
         L_DEBUG,
         L_INFO,
         L_WARNING,
@@ -15,9 +13,8 @@ public:
         L_CRITICAL
     };
 
-private:
-    static inline void Output(std::string Last, LEVEL Level)
-    {
+  private:
+    static inline void Output(std::string Last, LEVEL Level) {
         const std::string LevelStrings[5] = {
             "DEBUG",
             "INFO",
@@ -46,30 +43,26 @@ private:
             exit(1);
     }
     template <typename T>
-    static inline void Output(std::string Last, LEVEL Level, T Data)
-    {
+    static inline void Output(std::string Last, LEVEL Level, T Data) {
         Last += STRING_OPERATION::ToString(Data);
         Output(Last, Level);
     }
     template <typename T, typename... REST>
-    static inline void Output(std::string Last, LEVEL Level, T Data, REST... Rest)
-    {
+    static inline void Output(std::string Last, LEVEL Level, T Data, REST... Rest) {
         Last += STRING_OPERATION::ToString(Data);
         Output(Last, Level, Rest...);
     }
 
-public:
+  public:
     template <typename T,
               typename = std::enable_if_t<STRING_OPERATION::CanConvertToString<T>>>
-    static inline void Output(LEVEL Level, T Data)
-    {
+    static inline void Output(LEVEL Level, T Data) {
         Output("", Level, STRING_OPERATION::ToString(Data));
     }
     template <typename T, typename... REST,
               typename = std::enable_if_t<STRING_OPERATION::CanConvertToString<T> &&
                                           (STRING_OPERATION::CanConvertToString<REST> && ...)>>
-    static inline void Output(LEVEL Level, T Data, REST... Rest)
-    {
+    static inline void Output(LEVEL Level, T Data, REST... Rest) {
         Output("", Level, STRING_OPERATION::ToString(Data), Rest...);
     }
 };

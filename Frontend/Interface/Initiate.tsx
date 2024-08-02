@@ -41,6 +41,7 @@ export class Initiate extends React.Component<{}, StateType> {
                     <h1 className="mb-3">XMOJ账户</h1>
                     <p>请填写您的XMOJ账户信息，以便我们验证您的身份并获取相关数据。</p>
                     <Formik.Formik
+                        enableReinitialize
                         onSubmit={() => {
                             const UsernameInput = document.getElementById("XMOJUsername") as HTMLInputElement;
                             const PasswordInput = document.getElementById("XMOJPassword") as HTMLInputElement;
@@ -74,6 +75,7 @@ export class Initiate extends React.Component<{}, StateType> {
                     <h1 className="mb-3">XMOJ服务器</h1>
                     <p>请设置XMOJ服务器地址，如果您不确定，请不要更改此项，保留为默认值</p>
                     <Formik.Formik
+                        enableReinitialize
                         onSubmit={() => {
                             const BaseURLInput = document.getElementById("XMOJBaseURL") as HTMLInputElement;
                             if (BaseURLInput.value) {

@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(XMOJ-Client-Backend)
 
-if(NOT DEFINED ENV{CC})
-    message(FATAL_ERROR "Environment variable \"CC\" is not set")
-endif()
+# if(NOT DEFINED ENV{CC})
+#     message(FATAL_ERROR "Environment variable \"CC\" is not set")
+# endif()
 find_program(PERL_EXECUTABLE perl REQUIRED COMMENT "Checking for Perl")
 find_program(PYTHON_EXECUTABLE python REQUIRED COMMENT "Checking for Python")
 function(CheckPythonModule ModuleName)
@@ -25,7 +25,7 @@ CheckPythonModule(jsonschema)
 CheckPythonModule(jinja2)
 function(CheckSubmodule SubmoduleName)
     if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Libraries/${SubmoduleName}/CMakeLists.txt")
-        find_program(GIT_EXECUTABLE Git REQUIRED COMMENT "Checking for Git")
+        find_program(GIT_EXECUTABLE git REQUIRED COMMENT "Checking for Git")
         if(NOT GIT_EXECUTABLE)
             message(FATAL_ERROR "${CMAKE_CURRENT_SOURCE_DIR}/Libraries/${SubmoduleName}/CMakeLists.txt not found. Run `git submodule update --init --recursive` from the source tree to fetch the submodule contents.")
         else()
@@ -81,6 +81,9 @@ include_directories(Libraries/curl/include)
 set(LIBS
     SQLiteCpp
     libcurl
+    MbedTLS::mbedcrypto
+    MbedTLS::mbedtls
+    MbedTLS::mbedx509
 )
 
 aux_source_directory(. SourceFiles)

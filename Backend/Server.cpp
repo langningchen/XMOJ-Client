@@ -1,73 +1,58 @@
 #include "Server.hpp"
 #include "APIProceed.hpp"
+#include <Utilities/Assert.hpp>
 #include <Utilities/Logger.hpp>
 #include <thread>
-#include <Utilities/Assert.hpp>
 
-SERVER::SERVER(DATABASE *Database)
-{
+SERVER::SERVER() {
     Status = STOPPED;
-    this->Database = Database;
 
-    ASSERT_SAME(Server.set_mount_point("/", "Static"), true);
+    ASSERT_SAME(Server.set_mount_point("/", "../Static"), true);
 
     Server.set_logger(
-              [](const httplib::Request &Request, const httplib::Response &Response)
-              {
+              [](const httplib::Request &Request, const httplib::Response &Response) {
                   GeneralLogger.Output(Logger::L_DEBUG, Request.remote_addr, ": ", Request.method, " ", Request.path, " --> ", Response.status);
               })
         .Get("/",
-             [](const httplib::Request &, httplib::Response &Response)
-             {
+             [](const httplib::Request &, httplib::Response &Response) {
                  Response.set_redirect("/index.html");
              })
         .Post("/:APIName",
-              [&](const httplib::Request &Request, httplib::Response &Response)
-              {
+              [&](const httplib::Request &Request, httplib::Response &Response) {
                   std::string APIName = Request.path_params.at("APIName");
                   nlohmann::json APIParams;
-                  try
-                  {
+                  try {
                       APIParams = nlohmann::json::parse(Request.body);
-                  }
-                  catch (const std::exception &e)
-                  {
+                  } catch (const std::exception &e) {
                       Response.status = 400;
                       Response.set_content(e.what(), "text/plain");
                       return;
                   }
-                  try
-                  {
-                      API_PROCEED APIProceed(Database, APIName, APIParams);
+                  try {
+                      API_PROCEED APIProceed(APIName, APIParams);
                       nlohmann::json APIResult = APIProceed.Call();
                       GeneralLogger.Output(Logger::L_INFO, "API called: ", APIName, " ", APIParams.dump(), " --> ", APIResult.dump());
                       Response.set_content(APIResult.dump(), "application/json");
-                  }
-                  catch (const std::exception &e)
-                  {
+                  } catch (const std::exception &e) {
                       Response.status = 500;
                       Response.set_content(e.what(), "text/plain");
                   }
               });
 }
-void SERVER::Start()
-{
+void SERVER::Start() {
     ASSERT_SAME(Status, STOPPED);
     std::thread(
-        [&]()
-        {
+        [&]() {
             ASSERT_SAME(Server.listen("0.0.0.0", 8080), 0);
         })
         .detach();
     Status = STARTED;
 }
-void SERVER::Stop()
-{
+void SERVER::Stop() {
     ASSERT_SAME(Status, STARTED);
     Server.stop();
     Status = STOPPED;
 }
-SERVER::STATUS SERVER::GetStatus()
-{
+SERVER::STATUS SERVER::GetStatus() {
     return Status;
 }

@@ -1,17 +1,13 @@
 #include "Database.hpp"
 
-DATABASE::SQL_DATA::SQL_DATA_TYPE::DATA_TYPE_ENUM DATABASE::SQL_DATA::SQL_DATA_TYPE::GetType() const
-{
+DATABASE::SQL_DATA::SQL_DATA_TYPE::DATA_TYPE_ENUM DATABASE::SQL_DATA::SQL_DATA_TYPE::GetType() const {
     return Type;
 }
-bool DATABASE::SQL_DATA::SQL_DATA_TYPE::IsNull() const
-{
+bool DATABASE::SQL_DATA::SQL_DATA_TYPE::IsNull() const {
     return Type == NULL_TYPE;
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::operator int() const
-{
-    switch (Type)
-    {
+DATABASE::SQL_DATA::SQL_DATA_TYPE::operator int() const {
+    switch (Type) {
     case INTEGER:
         return IntegerValue;
     case REAL:
@@ -31,10 +27,8 @@ DATABASE::SQL_DATA::SQL_DATA_TYPE::operator int() const
         return 0;
     }
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::operator double() const
-{
-    switch (Type)
-    {
+DATABASE::SQL_DATA::SQL_DATA_TYPE::operator double() const {
+    switch (Type) {
     case INTEGER:
         GeneralLogger.Output(Logger::L_WARNING, "Converting INTEGER to REAL");
         return IntegerValue;
@@ -55,10 +49,8 @@ DATABASE::SQL_DATA::SQL_DATA_TYPE::operator double() const
         return 0;
     }
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::operator std::string() const
-{
-    switch (Type)
-    {
+DATABASE::SQL_DATA::SQL_DATA_TYPE::operator std::string() const {
+    switch (Type) {
     case INTEGER:
         GeneralLogger.Output(Logger::L_WARNING, "Converting INTEGER to TEXT");
         return std::to_string(IntegerValue);
@@ -78,10 +70,8 @@ DATABASE::SQL_DATA::SQL_DATA_TYPE::operator std::string() const
         return "";
     }
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::operator bool() const
-{
-    switch (Type)
-    {
+DATABASE::SQL_DATA::SQL_DATA_TYPE::operator bool() const {
+    switch (Type) {
     case INTEGER:
         GeneralLogger.Output(Logger::L_WARNING, "Converting INTEGER to BOOLEAN");
         return IntegerValue;
@@ -103,24 +93,19 @@ DATABASE::SQL_DATA::SQL_DATA_TYPE::operator bool() const
         return false;
     }
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(int Value) : Type(INTEGER)
-{
+DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(int Value) : Type(INTEGER) {
     this->IntegerValue = Value;
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(double Value) : Type(REAL)
-{
+DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(double Value) : Type(REAL) {
     this->RealValue = Value;
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(const char *Value) : Type(TEXT)
-{
+DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(const char *Value) : Type(TEXT) {
     this->TextValue = Value;
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(std::string Value) : Type(TEXT)
-{
+DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(std::string Value) : Type(TEXT) {
     this->TextValue = Value;
 }
-DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(bool Value) : Type(BOOLEAN)
-{
+DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(bool Value) : Type(BOOLEAN) {
     this->BooleanValue = Value;
 }
 DATABASE::SQL_DATA::SQL_DATA_TYPE::SQL_DATA_TYPE(std::nullptr_t Value) : Type(NULL_TYPE) {}

@@ -1,9 +1,8 @@
-#include <string>
 #include <nlohmann/json.hpp>
+#include <string>
 
-class API_RESULT
-{
-public:
+class API_RESULT {
+  public:
     bool Success;
     std::string Message;
     nlohmann::json Data;

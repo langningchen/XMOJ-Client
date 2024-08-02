@@ -1,24 +1,21 @@
 #pragma once
+#include <Utilities/Assert.hpp>
+#include <curl/curl.h>
 #include <string>
 #include <vector>
-#include <curl/curl.h>
-#include <Utilities/Assert.hpp>
 
-class WEB_REQUEST
-{
-public:
-    enum METHOD
-    {
+class WEB_REQUEST {
+  public:
+    enum METHOD {
         GET,
         POST
     };
-    enum CONTENT_TYPE
-    {
+    enum CONTENT_TYPE {
         JSON,
         FORM
     };
 
-private:
+  private:
     const std::string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
     const std::string ContentTypes[2] = {"application/json", "application/x-www-form-urlencoded"};
 
@@ -34,7 +31,7 @@ private:
     static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
     static size_t HeaderCallback(void *contents, size_t size, size_t nmemb, void *userp);
 
-public:
+  public:
     WEB_REQUEST *Get(std::string URL);
     WEB_REQUEST *Post(std::string URL);
     WEB_REQUEST *Header(std::string Header);
