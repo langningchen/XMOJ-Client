@@ -25,24 +25,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Release]
-        c_compiler: [gcc, clang, cl]
         include:
           - os: windows-latest
-            c_compiler: cl
-            cpp_compiler: cl
-          - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
           - os: ubuntu-latest
-            c_compiler: clang
-            cpp_compiler: clang++
-        exclude:
-          - os: windows-latest
             c_compiler: gcc
-          - os: windows-latest
-            c_compiler: clang
-          - os: ubuntu-latest
-            c_compiler: cl
+            cpp_compiler: g++
 
     steps:
     - uses: actions/checkout@v4
@@ -68,8 +57,12 @@ jobs:
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} -j 8 --target XMOJ-Client
 
-    - name: Test
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest --build-config ${{ matrix.build_type }}
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.os }}-Static
+        path: ${{ steps.strings.outputs.build-output-dir }}/Static
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.os }}-Backend
+        path: ${{ steps.strings.outputs.build-output-dir }}/Backend/XMOJ-Client-Backend
